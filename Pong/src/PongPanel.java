@@ -25,9 +25,9 @@ public class PongPanel extends JPanel implements Runnable
     private int FPS;
     /** The amount of time allocated for each cycle of the game loop (in nanos) */
     private long loopPeriod;
-    /** The amount of time the game has been running */
+    /** The time the game started (in nanos) */
     private long gameStartTime;
-    /** The amount of time spent playing the game */
+    /** The amount of time spent playing the game (in secs) */
     private int timeSpentInGame;
 
     /** The max number of times the animator thread will loop without sleeping
