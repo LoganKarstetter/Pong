@@ -70,8 +70,12 @@ public class KeyManager implements KeyListener
     public void keyPressed(KeyEvent e)
     {
         //The key is pressed or held down
-        keys[e.getKeyCode()] = true;
-        //System.out.println("Key Pressed");
+        //90 is pong specific, Z is has the highest key code of 90 out of a, k ,m and esc
+        if (e.getKeyCode() <= 90)
+        {
+            keys[e.getKeyCode()] = true;
+            //System.out.println("Key Pressed");
+        }
     }
 
     /**
@@ -82,8 +86,11 @@ public class KeyManager implements KeyListener
     public void keyReleased(KeyEvent e)
     {
         //The key is not longer pressed
-        keys[e.getKeyCode()] = false;
-        //System.out.println("Key Released");
+        if (e.getKeyCode() <= 90) //90 is pong specific
+        {
+            keys[e.getKeyCode()] = false;
+            //System.out.println("Key Released");
+        }
     }
 
     /**
