@@ -244,13 +244,20 @@ public class PongPanel extends JPanel implements Runnable
      */
     private void gameUpdate()
     {
-        if (!isPaused && !gameOver)
+        if (!gameOver)
         {
-            //Update the game
+            //Update the keyManager and paddles
             keyManager.update();
             leftPaddle.update();
             rightPaddle.update();
-            ball.update();
+
+            //Move the ball, but only if the game is not paused
+            if (!isPaused)
+            {
+                //Update the ball
+                ball.update();
+            }
+
         }
     }
 
