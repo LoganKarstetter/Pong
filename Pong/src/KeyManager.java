@@ -74,7 +74,7 @@ public class KeyManager implements KeyListener
         if (e.getKeyCode() <= 90)
         {
             keys[e.getKeyCode()] = true;
-            //System.out.println("Key Pressed");
+            System.out.println("Key Pressed");
         }
     }
 
@@ -89,7 +89,7 @@ public class KeyManager implements KeyListener
         if (e.getKeyCode() <= 90) //90 is pong specific
         {
             keys[e.getKeyCode()] = false;
-            //System.out.println("Key Released");
+            System.out.println("Key Released");
         }
     }
 
