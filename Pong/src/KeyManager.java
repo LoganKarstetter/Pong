@@ -1,59 +1,63 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 
 /**
  * @author Logan Karstetter
- * Date: 01/26/2018
+ * Date: 02/11/2018
  */
 public class KeyManager implements KeyListener
 {
-    /** An array of booleans determining if a key has been pressed */
-    private boolean keys[];
+    /** A HashMap of booleans determining if a key has been pressed.
+     * The key values for the map are the unique KeyCodes for each key. */
+    private HashMap<Integer, Boolean> keys;
 
     /** Determines if the esc button is pressed */
     private boolean escape;
-
-    /** Determines if the left paddle's up key is pressed */
+    /** Determines if the left paddle's up key was pressed */
     public boolean leftUp;
-    /** Determines if the left paddle's down key is pressed */
+    /** Determines if the left paddle's down key was pressed */
     public boolean leftDown;
-    /** Determines if the right paddle's up key is pressed */
+    /** Determines if the right paddle's up key was pressed */
     public boolean rightUp;
-    /** Determines if the right paddle's down key is pressed */
+    /** Determines if the right paddle's down key was pressed */
     public boolean rightDown;
 
-    /** A reference to the PongPanel */
+    /** A reference to the PongPanel this KeyManager listens for */
     private PongPanel pPanel;
 
     /**
      * A KeyManager is used to process concurrent keyboard inputs. The manager maintains
-     * an array of boolean values corresponding to each relevant key. When a key is pressed/held
-     * the value in the array is set to true. The value is set to false when a key is released.
+     * a HashMap of boolean values corresponding to each relevant key. When a key is pressed/held
+     * the value in the HashMap is set to true using the keyCode as the key. The value is set to
+     * false when a key is released.
      * @param pPanel The PongPanel this KeyManager handles KeyEvents for.
      */
     public KeyManager(PongPanel pPanel)
     {
-        //Store the PongPanel
+        //Store the reference to the PongPanel
         this.pPanel = pPanel;
 
-        //Initialize the keys array
-        //Keys are looked up using KeyCodes, KeyEvent.VK_Z has the highest keycode (90) out of all
-        //the keys used here, so there's no reason to make a bigger array.
-        keys = new boolean[91]; //zero indexed
+        //Create the keys map
+        keys = new HashMap<>();
+        keys.put(KeyEvent.VK_ESCAPE, false);
+        keys.put(KeyEvent.VK_A, false);
+        keys.put(KeyEvent.VK_Z, false);
+        keys.put(KeyEvent.VK_K, false);
+        keys.put(KeyEvent.VK_M, false);
     }
 
     /**
-     * Update the KeyManager's leftUp, leftDown, rightUp, rightDown, and escape
-     * boolean values.
+     * Update the KeyManager's escape, leftUp, leftDown, rightUp, and rightDown key boolean values.
      */
     public void update()
     {
-        //Set the booleans according to the array contents
-        escape = keys[KeyEvent.VK_ESCAPE];
-        leftUp = keys[KeyEvent.VK_A];
-        leftDown = keys[KeyEvent.VK_Z];
-        rightUp = keys[KeyEvent.VK_K];
-        rightDown = keys[KeyEvent.VK_M];
+        //Set the booleans according to the map contents
+        escape = keys.get(KeyEvent.VK_ESCAPE);
+        leftUp = keys.get(KeyEvent.VK_A);
+        leftDown = keys.get(KeyEvent.VK_Z);
+        rightUp = keys.get(KeyEvent.VK_K);
+        rightDown = keys.get(KeyEvent.VK_M);
 
         //Check if escape is set to true, stop the game
         if (escape)
@@ -64,37 +68,26 @@ public class KeyManager implements KeyListener
 
     /**
      * Invoked when a key is pressed. The keyCode of the keyEvent is used to
-     * set the corresponding boolean in the keys array to true.
+     * set the corresponding boolean in the keys HashMap.
      * @param e A KeyEvent
      */
     public void keyPressed(KeyEvent e)
     {
-        //The key is pressed or held down
-        //90 is pong specific, Z is has the highest key code of 90 out of a, k ,m and esc
-        if (e.getKeyCode() <= 90)
-        {
-            keys[e.getKeyCode()] = true;
-            System.out.println("Key Pressed");
-        }
+        keys.replace(e.getKeyCode(), true);
     }
 
     /**
      * Invoked when a key is released. The keyCode of the keyEvent is used to
-     * set the corresponding boolean in the keys array to false.
+     * set the corresponding boolean in the keys HashMap.
      * @param e A KeyEvent
      */
     public void keyReleased(KeyEvent e)
     {
-        //The key is not longer pressed
-        if (e.getKeyCode() <= 90) //90 is pong specific
-        {
-            keys[e.getKeyCode()] = false;
-            System.out.println("Key Released");
-        }
+        keys.replace(e.getKeyCode(), false);
     }
 
     /**
-     * Invoked when a key is typed (pressed and released). This method does nothing.
+     * Invoked when a key is pressed and then released. This method does nothing.
      * @param e A KeyEvent
      */
     public void keyTyped(KeyEvent e)
