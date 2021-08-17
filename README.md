@@ -1,4 +1,0 @@
-# Pong
-A two-player Pong game I created in Java in January 2018. The game features an animation framework, active rendering, double buffering, and accepts a single integer command line argument to be passed to set the desired FPS (20 by default, higher values will increase the difficulty). The left paddle is controlled with the A and Z keys, the right paddle is controlled with the K and M keys, and the ESC key quits the game. The first player to score five times wins!
-
-Note: There is currently a bug in Java with macOS Sierra that can result in key presses not being interpreted. This is due to the new macOS feature that offers the character accent menu when a key is held down. This bug may cause the paddles to freeze in place. For more information see: https://bugs.openjdk.java.net/browse/JDK-8167263
